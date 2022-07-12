@@ -8,6 +8,8 @@ import { store } from '@/store/store';
 
 import HeadProvider from './HeadProvider/HeadProvider';
 import ReduxToast from './ReduxToast';
+import AuthProvider from './AuthProvider/AuthProvider';
+import { TypeComponentAuthFields } from '@/shared/types/auth.types';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -17,13 +19,16 @@ const queryClient = new QueryClient({
 	},
 });
 
-const MainProvider: FC<PropsWithChildren> = ({ children }) => {
+const MainProvider: FC<TypeComponentAuthFields> = ({ children, Component}) => {
 	return (
 		<HeadProvider>
 			<Provider store={store}>
 				<QueryClientProvider client={queryClient}>
 					<ReduxToast />
-					<Layout>{children}</Layout>
+					<AuthProvider Component={Component}>
+						<Layout>{children}</Layout>
+					</AuthProvider>
+					
 				</QueryClientProvider>
 			</Provider>
 		</HeadProvider>

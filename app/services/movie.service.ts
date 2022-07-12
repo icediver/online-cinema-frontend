@@ -1,5 +1,8 @@
 import { axiosClassic } from 'api/interceptors';
-import { getMoviesUrl } from 'config/api.contig';
+import axios from 'api/interceptors';
+import { getMoviesUrl } from 'config/api.config';
+
+import { IMovieEditInput } from '@/components/screens/admin/movie/movie-edit.interface';
 
 import { IMovie } from '@/shared/types/movie.types';
 
@@ -18,5 +21,17 @@ export const MovieService = {
 			getMoviesUrl('/most-popular')
 		);
 		return movies;
+	},
+	async getById(_id: string) {
+		return axios.get<IMovieEditInput>(getMoviesUrl(`/${_id}`), {});
+	},
+	async update(_id: string, data: IMovieEditInput) {
+		return axios.put<string>(getMoviesUrl(`/${_id}`), data);
+	},
+	async create() {
+		return axios.post<string>(getMoviesUrl(`/`));
+	},
+	async delete(_id: string) {
+		return axios.delete<string>(getMoviesUrl(`/${_id}`));
 	},
 };
