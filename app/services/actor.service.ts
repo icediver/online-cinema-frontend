@@ -4,8 +4,11 @@ import { getActorsUrl } from 'config/api.config';
 
 
 
-import { IActor } from '@/shared/types/movie.types';
 import { IActorEditInput } from '@/components/screens/admin/actor/actor-edit.interface';
+
+
+
+import { IActor } from '@/shared/types/movie.types';
 
 
 export const ActorService = {
@@ -20,6 +23,10 @@ export const ActorService = {
 	},
 	async getById(_id: string) {
 		return axios.get<IActorEditInput>(getActorsUrl(`/${_id}`), {});
+	},
+	async getBySlug(slug: string) {
+		
+		return axiosClassic.get<IActor>(getActorsUrl(`/by-slug/${slug}`), {});
 	},
 	async create() {
 		return axios.post<string>(getActorsUrl(`/`));
