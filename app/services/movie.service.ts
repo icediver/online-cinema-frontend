@@ -2,9 +2,14 @@ import { axiosClassic } from 'api/interceptors';
 import axios from 'api/interceptors';
 import { getMoviesUrl } from 'config/api.config';
 
+
+
 import { IMovieEditInput } from '@/components/screens/admin/movie/movie-edit.interface';
 
+
+
 import { IMovie } from '@/shared/types/movie.types';
+
 
 export const MovieService = {
 	async getAll(searchTerm?: string) {
@@ -22,6 +27,16 @@ export const MovieService = {
 		);
 		return movies;
 	},
+
+	async getByActor(actorId: string) {
+		return axiosClassic.get<IMovie[]>(getMoviesUrl(`/by-actor/${actorId}`));
+	},
+	async getByGenres(genreIds: string[]) {
+		return axiosClassic.post<IMovie[]>(getMoviesUrl('/by-genres'), {
+			genreIds,
+		});
+	},
+
 	async getById(_id: string) {
 		return axios.get<IMovieEditInput>(getMoviesUrl(`/${_id}`), {});
 	},

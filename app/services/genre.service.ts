@@ -2,8 +2,9 @@ import { axiosClassic } from 'api/interceptors';
 import axios from 'api/interceptors';
 import { getGenresUrl } from 'config/api.config';
 
-import { IGenre } from '@/shared/types/movie.types';
 import { IGenreEditInput } from '@/components/screens/admin/genre/genre-edit.interface';
+
+import { IGenre } from '@/shared/types/movie.types';
 
 export const GenreService = {
 	async getAll(searchTerm?: string) {
@@ -16,9 +17,10 @@ export const GenreService = {
 		});
 	},
 	async getById(_id: string) {
-		return axios.get<IGenreEditInput>(getGenresUrl(`/${_id}`), {
-		
-		});
+		return axios.get<IGenreEditInput>(getGenresUrl(`/${_id}`), {});
+	},
+	async getBySlug(slug: string) {
+		return axiosClassic.get<IGenre>(getGenresUrl(`/by-slug/${slug}`), {});
 	},
 	async create() {
 		return axios.post<string>(getGenresUrl(`/`));
