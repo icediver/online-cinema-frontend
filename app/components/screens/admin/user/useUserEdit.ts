@@ -4,45 +4,51 @@ import { SubmitHandler, UseFormSetValue } from 'react-hook-form';
 import { useMutation, useQuery } from 'react-query';
 import { toastr } from 'react-redux-toastr';
 
-import { MovieService } from '@/services/movie.service';
+
+
+import { UserService } from '@/services/user.service';
+
+
 
 import { getKeys } from '@/utils/object/getKeys';
 import { toastError } from '@/utils/toast-error';
 
-import { IMovieEditInput } from './movie-edit.interface';
 
-export const useMovieEdit = (setValue: UseFormSetValue<IMovieEditInput>) => {
+
+import { IUserEditInput } from './user-edit.interface';
+
+
+export const useUserEdit = (setValue: UseFormSetValue<IUserEditInput>) => {
 	const { push, query } = useRouter();
-	const movieId = String(query.id);
+	const userId = String(query.id);
 	const { isLoading } = useQuery(
-		['movie', movieId],
-		() => MovieService.getById(movieId),
+		['user', userId],
+		() => UserService.getById(userId),
 		{
 			onSuccess: ({ data }) => {
-				getKeys(data).forEach((key) => {
-					setValue(key, data[key]);
-				});
+				setValue('email', data.email)
+				setValue('isAdmin', data.isAdmin)
 			},
 			onError: (error) => {
-				toastError(error, 'Gen Movie');
+				toastError(error, 'Gen User');
 			},
 			enabled: !!query.id,
 		}
 	);
 	const { mutateAsync } = useMutation(
-		'update movie',
-		(data: IMovieEditInput) => MovieService.update(movieId, data),
+		'update user',
+		(data: IUserEditInput) => UserService.update(userId, data),
 		{
 			onError: (error) => {
-				toastError(error, 'Get Movie');
+				toastError(error, 'Gen User');
 			},
 			onSuccess: () => {
-				toastr.success('Update movie', 'update was successful');
-				push(getAdminUrl('movies'));
+				toastr.success('Update user', 'update was successful');
+				push(getAdminUrl('users'));
 			},
 		}
 	);
-	const onSubmit: SubmitHandler<IMovieEditInput> = async (data) => {
+	const onSubmit: SubmitHandler<IUserEditInput> = async (data) => {
 		await mutateAsync(data);
 	};
 
