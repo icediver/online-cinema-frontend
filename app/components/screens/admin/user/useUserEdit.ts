@@ -30,7 +30,7 @@ export const useUserEdit = (setValue: UseFormSetValue<IUserEditInput>) => {
 				setValue('isAdmin', data.isAdmin)
 			},
 			onError: (error) => {
-				toastError(error, 'Gen User');
+				toastError(error, 'Get User');
 			},
 			enabled: !!query.id,
 		}
@@ -40,7 +40,7 @@ export const useUserEdit = (setValue: UseFormSetValue<IUserEditInput>) => {
 		(data: IUserEditInput) => UserService.update(userId, data),
 		{
 			onError: (error) => {
-				toastError(error, 'Gen User');
+				toastError(error, 'Get User');
 			},
 			onSuccess: () => {
 				toastr.success('Update user', 'update was successful');

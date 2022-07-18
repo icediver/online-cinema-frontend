@@ -4,6 +4,7 @@ import { getUsersUrl } from 'config/api.config';
 import { IProfileInput } from '@/components/screens/profile/profile.interface';
 
 import { IUser } from '@/shared/types/user.types';
+import { IMovie } from '@/shared/types/movie.types';
 
 export const UserService = {
 	async getAll(searchTerm?: string) {
@@ -17,6 +18,12 @@ export const UserService = {
 	},
 	async getProfile() {
 		return axios.get<IUser>(getUsersUrl(`/profile`));
+	},
+	async getFavorites() {
+		return axios.get<IMovie[]>(getUsersUrl(`/profile/favorites`));
+	},
+	async toggleFavorite(movieId: string) {
+		return axios.put(getUsersUrl(`/profile/favorites`), {movieId});
 	},
 	async updateProfile(data: IProfileInput) {
 		return axios.put<string>(getUsersUrl(`/profile`), data);
