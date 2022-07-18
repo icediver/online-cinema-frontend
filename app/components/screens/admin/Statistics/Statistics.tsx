@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import PopularMovies from '@/components/layout/MoviesContainer/PopularMovies';
+import PopularMovies from '@/components/layout/SideBar/MoviesContainer/PopularMovie/PopularMovies';
 
 import styles from '../Admin.module.scss';
 import CountUsers from './CountUsers';

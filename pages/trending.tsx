@@ -4,6 +4,7 @@ import { FC } from 'react';
 import Catalog from '@/components/ui/catalog-movies/Catalog';
 
 import { IMovie } from '@/shared/types/movie.types';
+
 import { MovieService } from '@/services/movie.service';
 
 const trendingPage: NextPage<{ movies: IMovie[] }> = ({ movies }) => {
@@ -18,20 +19,18 @@ const trendingPage: NextPage<{ movies: IMovie[] }> = ({ movies }) => {
 
 export const getStaticProps: GetStaticProps = async () => {
 	try {
-
-		const movies = await MovieService.getMostPopularMovies()
+		const movies = await MovieService.getMostPopularMovies();
 
 		return {
 			props: {
 				movies,
-			}
-		}
-
+			},
+		};
 	} catch (error) {
 		return {
 			notFound: true,
-		}
+		};
 	}
-}
+};
 
 export default trendingPage;
